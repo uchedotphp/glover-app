@@ -23,4 +23,9 @@
   .card .btn {
     @apply inline-flex items-center rounded-md border border-glover-purple bg-white font-semibold text-glover-purple shadow-sm hover:bg-gray-50 focus:outline-none;
   }
+
+  /* global search */
+  .global-search {
+    max-width: 423px;
+  }
 }
