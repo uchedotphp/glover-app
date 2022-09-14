@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: "UserAvatar",
+};
+</script>
+
 <template>
   <img
     class="inline-block h-9 w-9 rounded-xl"
@@ -5,11 +11,5 @@
     alt="user avatar"
   />
 </template>
-
-<script>
-export default {
-  name: "UserAvatar",
-};
-</script>
 
 <style lang="scss" scoped></style>
