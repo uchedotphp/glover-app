@@ -1,31 +1,33 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import FeaturedEvent from "./components/FeaturedEvent.vue";
+import HeaderSection from "./components/HeaderSection.vue";
+import GlobalSearch from "./components/GlobalSearch.vue";
+import SingleEvent from "./components/SingleEvent.vue";
 </script>
 
 <template>
-  <div class="bg-red-600">
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div
+    class="mx-auto max-w-5xl py-7 lg:py-20 px-4 sm:px-6 lg:px-8 min-h-screen"
+  >
+    <HeaderSection class="mb-12" />
+    <GlobalSearch class="mb-10 global-search" />
+
+    <div class="mb-5">
+      <h3 class="section-title mb-5">Featured Events</h3>
+
+      <div class="sm:grid sm:grid-cols-2 sm:gap-6">
+        <FeaturedEvent v-for="n in 2" :key="n" class="mb-6 sm:mb-0" />
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <h3 class="section-title mb-5">All Events</h3>
+
+      <div class="sm:grid sm:grid-cols-4 sm:gap-6">
+        <SingleEvent v-for="n in 8" :key="n" class="mb-6 sm:mb-0" />
+      </div>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>
