@@ -7,10 +7,10 @@ const props = defineProps({
 
 const eventDetails = props.payload.event;
 
-const eventTitle = computed(() => {
-  const title = eventDetails.title;
-  return title.length ? title : `Event ${props.payload.index + 1}`;
-});
+// const eventTitle = computed(() => {
+//   const title = eventDetails.title;
+//   return title.length ? title : `Event ${props.payload.index + 1}`;
+// });
 
 const eventLocation = computed(
   () => `${eventDetails.venue.country} (${eventDetails.venue.name})`
@@ -60,7 +60,7 @@ function purchaseTicket() {
     </div>
 
     <div class="relative">
-      <p class="title">{{ eventTitle }}</p>
+      <p class="title">{{ eventDetails.title }}</p>
 
       <!-- date badge -->
       <span class="badge">{{ eventDate }}</span>

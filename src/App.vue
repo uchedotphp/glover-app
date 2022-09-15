@@ -26,7 +26,7 @@ onBeforeMount(async () => {
 const events = computed(() => store.state.events);
 
 // other events
-const otherEvents = computed(() => store.getters['otherEvents'])
+const otherEvents = computed(() => store.getters["eventsBySearchTerm"]);
 
 // featured events
 const featuredEvents = computed(
@@ -35,18 +35,6 @@ const featuredEvents = computed(
       events.value.filter((e) => e.venue.city.toLowerCase() === "london")) ||
     []
 );
-
-// generate random images
-const randomImages = computed(() => {
-  // const images = [];
-  if (otherEvents.value.length) {
-    // for (let index = 0; index < otherEvents.value.length; index++) {
-    //   const a = 'https://source.unsplash.com/random'
-    //   images.push(a);
-    // }
-  }
-  // return images;
-});
 </script>
 
 <template>
