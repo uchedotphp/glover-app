@@ -71,7 +71,7 @@ const featuredEvents = computed(
     <div class="mb-5">
       <h3 class="section-title mb-5">All Events</h3>
 
-      <div v-if="otherEvents.length" class="sm:grid sm:grid-cols-4 sm:gap-6">
+      <div v-if="otherEvents.length" class="sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-6">
         <SingleEvent
           v-for="(event, index) in otherEvents"
           :key="event.id"
