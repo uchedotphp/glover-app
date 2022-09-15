@@ -63,7 +63,7 @@ function purchaseTicket() {
       <img
         :src="artistImg"
         :alt="artistName"
-        class="object-cover object-center w-full slide-img"
+        class="slide-img"
       />
     </div>
     <p class="title">{{ artistName }} {{ eventTitle }}</p>
@@ -152,11 +152,6 @@ function purchaseTicket() {
 </template>
 
 <style lang="scss" scoped>
-.slide-img {
-  //   max-width: 492px;
-  max-height: 188px;
-}
-
 .card {
   .title {
     font-size: 14px;

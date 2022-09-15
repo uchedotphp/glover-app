@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
   payload: Object,
@@ -37,6 +37,8 @@ const eventDate = computed(() => {
   }`;
 });
 
+const randomImage = ref("https://source.unsplash.com/random");
+
 const disablePurchaseBtn = computed(() => !eventDetails.url.length);
 
 function purchaseTicket() {
@@ -50,11 +52,7 @@ function purchaseTicket() {
     <div
       class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100"
     >
-      <img
-        src="https://source.unsplash.com/random"
-        alt="random unsplash images"
-        class="slide-img"
-      />
+      <img :src="randomImage" alt="random unsplash images" class="slide-img" />
     </div>
 
     <div class="relative">
