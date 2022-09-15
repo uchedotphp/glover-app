@@ -1,7 +1,48 @@
-<script>
-export default {
-  name: "SingleEvent",
-};
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps({
+  payload: Object,
+});
+
+const eventDetails = props.payload.event;
+
+const eventTitle = computed(() => {
+  const title = eventDetails.title;
+  return title.length ? title : `Event ${props.payload.index + 1}`;
+});
+
+const eventLocation = computed(
+  () => `${eventDetails.venue.country} (${eventDetails.venue.name})`
+);
+
+const eventDate = computed(() => {
+  const eventDate = eventDetails.starts_at;
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  return `${new Date(eventDate).getDate()} ${
+    months[new Date(eventDate).getMonth()]
+  }`;
+});
+
+const disablePurchaseBtn = computed(() => !props.payload.event.url.length);
+
+function purchaseTicket() {
+  const ticketUrl = props.payload.event.url;
+  window.open(ticketUrl, "_blank");
+}
 </script>
 
 <template>
@@ -17,14 +58,14 @@ export default {
     </div>
 
     <div class="relative">
-      <p class="title">Event 1</p>
+      <p class="title">{{ eventTitle }}</p>
 
       <!-- date badge -->
-      <span class="badge">31 Oct</span>
+      <span class="badge">{{ eventDate }}</span>
 
       <div class="sm:flex sm:items-center sm:justify-between relative">
         <div>
-          <div class="flex mt-3.5">
+          <div class="flex mt-3">
             <div class="mr-7 details">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -46,11 +87,11 @@ export default {
                 />
               </svg>
 
-              <span class="ml-2.5"> Lagos </span>
+              <span class="ml-2.5"> {{ eventLocation }} </span>
             </div>
           </div>
 
-          <div class="mt-3.5 details">
+          <div class="mt-3 details">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -75,7 +116,14 @@ export default {
     </div>
 
     <div class="mt-3">
-      <button type="button" class="btn">Buy Ticket</button>
+      <button
+        :disabled="disablePurchaseBtn"
+        @click="purchaseTicket"
+        type="button"
+        class="btn"
+      >
+        Buy Ticket
+      </button>
     </div>
   </div>
 </template>
