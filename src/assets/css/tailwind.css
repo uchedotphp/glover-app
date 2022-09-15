@@ -29,8 +29,7 @@
   }
 
   .card .slide-img {
-    @apply object-cover object-center w-full;
-    max-height: 188px;
+    @apply object-cover object-center w-full h-36;
   }
 
   .card .title {

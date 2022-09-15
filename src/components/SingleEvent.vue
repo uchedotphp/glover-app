@@ -52,7 +52,11 @@ function purchaseTicket() {
     <div
       class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100"
     >
-      <img :src="randomImage" alt="random unsplash images" class="slide-img" />
+      <img
+        :src="`https://source.unsplash.com/random?${props.payload.index}`"
+        alt="random unsplash images"
+        class="slide-img"
+      />
     </div>
 
     <div class="relative">

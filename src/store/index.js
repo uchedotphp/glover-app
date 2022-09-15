@@ -5,7 +5,8 @@ import errorHandler from "../utils/errorHandler";
 const store = createStore({
   state() {
     return {
-      events: []
+      events: [],
+      searchTerm: "",
     };
   },
 
@@ -42,6 +43,23 @@ const store = createStore({
       }
       return [];
     },
+
+    otherEvents(state) {
+      return (
+        (state.events.length &&
+          state.events.filter((e) => e.venue.city.toLowerCase() !== "london")) ||
+        []
+      );
+    },
+
+    eventsBySearchTerm(state, getters) {
+        if (getters.otherEvents.length) {
+          const searchTerm =
+            state.searchTerm.charAt(0).toUpperCase() +
+            state.searchTerm.slice(1);
+          return state.events.filter((c) => c.name.match(searchTerm));
+        }
+    }
   },
 });
 
