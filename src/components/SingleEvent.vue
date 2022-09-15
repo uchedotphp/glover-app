@@ -51,9 +51,9 @@ function purchaseTicket() {
       class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100"
     >
       <img
-        src="../assets/imgs/event.png"
-        alt="wizkid in warri"
-        class="object-cover object-center slide-img"
+        src="https://source.unsplash.com/random"
+        alt="random unsplash images"
+        class="object-cover object-center w-full slide-img"
       />
     </div>
 

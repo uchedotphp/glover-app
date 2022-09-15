@@ -11,16 +11,26 @@ const eventDetails = props.payload.event;
 
 const venueName = computed(() => eventDetails.venue.name); // using this inplace of event description
 
-const artistName = computed(() => {
+const artistObject = computed(() => {
   const artists = store.getters["availableArtists"];
-  if (artists.length) {
-    const artist = artists.find(
-      (a) => a.artist_id === eventDetails.artist_id
-    ).artist;
-    return `${artist.name} in `;
-  }
-  return "";
+  return (
+    (artists.length &&
+      artists.find((a) => a.artist_id === eventDetails.artist_id)?.artist) ||
+    {}
+  );
 });
+
+const artistName = computed(() =>
+  Object.values(artistObject).length && "name" in artistObject.value
+    ? artistObject.value.name
+    : ""
+);
+
+const artistImg = computed(() =>
+  Object.values(artistObject).length && "image_url" in artistObject.value
+    ? artistObject.value.image_url
+    : ""
+);
 
 const eventTitle = computed(() => {
   const title = eventDetails.title;
@@ -51,9 +61,9 @@ function purchaseTicket() {
       class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100"
     >
       <img
-        src="../assets/imgs/wizkid.png"
-        alt="wizkid in warri"
-        class="object-cover object-center slide-img"
+        :src="artistImg"
+        :alt="artistName"
+        class="object-cover object-center w-full slide-img"
       />
     </div>
     <p class="title">{{ artistName }} {{ eventTitle }}</p>
