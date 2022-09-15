@@ -39,6 +39,18 @@ const otherEvents = computed(
       events.value.filter((e) => e.venue.city !== "London")) ||
     []
 );
+
+// generate random images
+const randomImages = computed(() => {
+  // const images = [];
+  if (otherEvents.value.length) {
+    // for (let index = 0; index < otherEvents.value.length; index++) {
+    //   const a = 'https://source.unsplash.com/random'
+    //   images.push(a);
+    // }
+  }
+  // return images;
+});
 </script>
 
 <template>
@@ -53,10 +65,7 @@ const otherEvents = computed(
     <div class="mb-5">
       <h3 class="section-title mb-5">Featured Events</h3>
 
-      <div
-        v-if="featuredEvents.length"
-        class="sm:grid sm:grid-cols-2 sm:gap-6"
-      >
+      <div v-if="featuredEvents.length" class="sm:grid sm:grid-cols-2 sm:gap-6">
         <FeaturedEvent
           v-for="(event, index) in featuredEvents"
           :key="event.id"
