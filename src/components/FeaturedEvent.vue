@@ -1,3 +1,50 @@
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+const props = defineProps({
+  payload: Object,
+});
+
+const eventDetails = props.payload.event;
+
+const venueName = computed(() => eventDetails.venue.name); // using this inplace of event description
+
+const artistName = computed(() => {
+  const artists = store.getters["availableArtists"];
+  if (artists.length) {
+    const artist = artists.find(
+      (a) => a.artist_id === eventDetails.artist_id
+    ).artist;
+    return `${artist.name} in `;
+  }
+  return "";
+});
+
+const eventTitle = computed(() => {
+  const title = eventDetails.title;
+  return title.length
+    ? title
+    : venueName.value.length
+    ? venueName.value
+    : `Event ${props.payload.index + 1}`;
+});
+
+const eventLocation = computed(() => eventDetails.venue.country);
+
+const eventDate = computed(() =>
+  new Date(eventDetails.starts_at).toDateString()
+);
+
+const disablePurchaseBtn = computed(() => !props.payload.event.url.length);
+
+function purchaseTicket() {
+  const ticketUrl = props.payload.event.url;
+  window.open(ticketUrl, "_blank");
+}
+</script>
+
 <template>
   <div class="card">
     <div
@@ -9,7 +56,7 @@
         class="object-cover object-center slide-img"
       />
     </div>
-    <p class="title">Wizkid in Warri</p>
+    <p class="title">{{ artistName }} {{ eventTitle }}</p>
 
     <div class="sm:flex sm:items-center sm:justify-between">
       <div class="">
@@ -35,7 +82,7 @@
               />
             </svg>
 
-            <span class="ml-2.5"> Lagos </span>
+            <span class="ml-2.5"> {{ eventLocation }} </span>
           </div>
 
           <div class="details">
@@ -54,7 +101,7 @@
               />
             </svg>
 
-            <span class="ml-2.5 truncate"> 8th December, 2021 </span>
+            <span class="ml-2.5 truncate"> {{ eventDate }} </span>
           </div>
         </div>
 
@@ -81,17 +128,18 @@
       </div>
 
       <div class="mt-3 sm:mt-0">
-        <button type="button" class="btn">Buy Ticket</button>
+        <button
+          :disabled="disablePurchaseBtn"
+          @click="purchaseTicket"
+          type="button"
+          class="btn"
+        >
+          Buy Ticket
+        </button>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "FeaturedEvent",
-};
-</script>
 
 <style lang="scss" scoped>
 .slide-img {
