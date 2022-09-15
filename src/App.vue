@@ -5,6 +5,7 @@ import GlobalSearch from "./components/GlobalSearch.vue";
 import SingleEvent from "./components/SingleEvent.vue";
 import NoDataFound from "./components/NoDataFound.vue";
 import LoadingState from "./components/LoadingState.vue";
+import NavRight from "./components/NavRight.vue";
 
 import { ref, onBeforeMount, computed } from "vue";
 import { useStore } from "vuex";
@@ -50,13 +51,18 @@ const featuredEvents = computed(
     <div class="mb-5">
       <h3 class="section-title mb-5">Featured Events</h3>
 
-      <div v-if="featuredEvents.length" class="sm:grid sm:grid-cols-2 sm:gap-6">
-        <FeaturedEvent
-          v-for="(event, index) in featuredEvents"
-          :key="event.id"
-          :payload="{ event, index }"
-          class="mb-6 sm:mb-0"
-        />
+      <div v-if="featuredEvents.length" class="relative overflow-x-hidden">
+        <div
+          class="flex overflow-x-scroll sm:overflow-x-hidden sm:grid sm:grid-cols-2 sm:gap-6 relative"
+        >
+          <FeaturedEvent
+            v-for="(event, index) in featuredEvents"
+            :key="event.id"
+            :payload="{ event, index }"
+            class="mb-6 sm:mb-0 mr-6 md:mr-0 last:mr-0"
+          />
+        </div>
+          <NavRight class="absolute" />
       </div>
 
       <NoDataFound title="featured events" v-else />
@@ -83,7 +89,7 @@ const featuredEvents = computed(
 
 <style scoped>
 .stick-to-top {
-  @apply sticky top-0 pb-10 z-10;
+  @apply sticky top-0 pb-10 z-50;
   background-color: #e5e5e5;
 }
 </style>
