@@ -33,7 +33,6 @@ const otherEvents = computed(() =>
 
 <template>
   <div
-    v-if="!pageLoading"
     class="mx-auto max-w-5xl py-7 lg:py-20 px-4 sm:px-6 lg:px-8 min-h-screen"
   >
     <div class="stick-to-top">
@@ -68,12 +67,12 @@ const otherEvents = computed(() =>
     </div>
   </div>
 
-  <span v-else class="flex h-3 w-3">
+  <!-- <span v-else class="flex h-3 w-3">
     <span
       class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
     ></span>
     <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-  </span>
+  </span> -->
 </template>
 
 <style scoped>
