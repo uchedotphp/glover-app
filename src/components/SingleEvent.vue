@@ -37,10 +37,10 @@ const eventDate = computed(() => {
   }`;
 });
 
-const disablePurchaseBtn = computed(() => !props.payload.event.url.length);
+const disablePurchaseBtn = computed(() => !eventDetails.url.length);
 
 function purchaseTicket() {
-  const ticketUrl = props.payload.event.url;
+  const ticketUrl = eventDetails.url;
   window.open(ticketUrl, "_blank");
 }
 </script>
@@ -51,9 +51,9 @@ function purchaseTicket() {
       class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100"
     >
       <img
-        src="../assets/imgs/event.png"
-        alt="wizkid in warri"
-        class="object-cover object-center slide-img"
+        src="https://source.unsplash.com/random"
+        alt="random unsplash images"
+        class="slide-img"
       />
     </div>
 
@@ -129,10 +129,6 @@ function purchaseTicket() {
 </template>
 
 <style lang="scss" scoped>
-.slide-img {
-  max-height: 188px;
-}
-
 .card {
   .title {
     font-size: 12px;
