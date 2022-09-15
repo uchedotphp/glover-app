@@ -45,21 +45,29 @@ const store = createStore({
     },
 
     otherEvents(state) {
-      return (
-        (state.events.length &&
-          state.events.filter((e) => e.venue.city.toLowerCase() !== "london")) ||
-        []
-      );
+      const events =
+        state.events.length &&
+        state.events.filter((e) => e.venue.city.toLowerCase() !== "london");
+      if (events.length) {
+        return events.map((e, index) => {
+          if (e.title.length) {
+            return { ...e, title };
+          } else {
+            return { ...e, title: `Event ${index + 1}` };
+          }
+        });
+      }
+      return [];
     },
 
     eventsBySearchTerm(state, getters) {
-        if (getters.otherEvents.length) {
-          const searchTerm =
-            state.searchTerm.charAt(0).toUpperCase() +
-            state.searchTerm.slice(1);
-          return state.events.filter((c) => c.name.match(searchTerm));
-        }
-    }
+      if (getters.otherEvents.length) {
+        const searchTerm =
+          state.searchTerm.charAt(0).toUpperCase() + state.searchTerm.slice(1);
+        return getters.otherEvents.filter((c) => c.title.match(searchTerm));
+      }
+      return getters.otherEvents
+    },
   },
 });
 
