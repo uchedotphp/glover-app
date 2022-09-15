@@ -1,7 +1,15 @@
-<script>
-export default {
-  name: "GlobalSearch"
-};
+<script setup>
+import { ref } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+const search = ref("");
+
+function searchData() {
+  store.commit('setStates', {
+    searchTerm: search.value
+  })
+}
 </script>
 
 <template>
@@ -26,6 +34,8 @@ export default {
         </svg>
       </div>
       <input
+        v-model="search"
+        @update:model-value="searchData"
         type="text"
         name="search"
         id="search"

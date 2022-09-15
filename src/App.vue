@@ -25,19 +25,14 @@ onBeforeMount(async () => {
 // all events
 const events = computed(() => store.state.events);
 
+// other events
+const otherEvents = computed(() => store.getters['otherEvents'])
+
 // featured events
 const featuredEvents = computed(
   () =>
     (events.value.length &&
-      events.value.filter((e) => e.venue.city === "London")) ||
-    []
-);
-
-// other events
-const otherEvents = computed(
-  () =>
-    (events.value.length &&
-      events.value.filter((e) => e.venue.city !== "London")) ||
+      events.value.filter((e) => e.venue.city.toLowerCase() === "london")) ||
     []
 );
 
