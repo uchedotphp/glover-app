@@ -4,21 +4,22 @@ import HeaderSection from "./components/HeaderSection.vue";
 import GlobalSearch from "./components/GlobalSearch.vue";
 import SingleEvent from "./components/SingleEvent.vue";
 import NoDataFound from "./components/NoDataFound.vue";
+import LoadingState from "./components/LoadingState.vue";
 
 import { ref, onBeforeMount, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 
-let pageLoading = ref(false);
+const pageLoading = ref(false);
 
 onBeforeMount(async () => {
-  pageLoading = true;
+  pageLoading.value = true;
   try {
     await store.dispatch("getEvents");
   } catch (error) {
     console.log(error);
   }
-  pageLoading = false;
+  pageLoading.value = false;
 });
 
 // all events
@@ -55,6 +56,7 @@ const randomImages = computed(() => {
 
 <template>
   <div
+    v-if="!pageLoading"
     class="mx-auto max-w-5xl py-7 lg:py-20 px-4 sm:px-6 lg:px-8 min-h-screen"
   >
     <div class="stick-to-top">
@@ -93,12 +95,7 @@ const randomImages = computed(() => {
     </div>
   </div>
 
-  <!-- <span v-else class="flex h-3 w-3">
-    <span
-      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
-    ></span>
-    <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-  </span> -->
+  <LoadingState v-else />
 </template>
 
 <style scoped>
