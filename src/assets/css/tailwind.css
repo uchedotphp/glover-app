@@ -28,6 +28,11 @@
     box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.02);
   }
 
+  .card .slide-img {
+    @apply object-cover object-center w-full;
+    max-height: 188px;
+  }
+
   .card .title {
     @apply font-bold text-left;
     color: #2f2f2f;

@@ -37,10 +37,10 @@ const eventDate = computed(() => {
   }`;
 });
 
-const disablePurchaseBtn = computed(() => !props.payload.event.url.length);
+const disablePurchaseBtn = computed(() => !eventDetails.url.length);
 
 function purchaseTicket() {
-  const ticketUrl = props.payload.event.url;
+  const ticketUrl = eventDetails.url;
   window.open(ticketUrl, "_blank");
 }
 </script>
@@ -53,7 +53,7 @@ function purchaseTicket() {
       <img
         src="https://source.unsplash.com/random"
         alt="random unsplash images"
-        class="object-cover object-center w-full slide-img"
+        class="slide-img"
       />
     </div>
 
@@ -129,10 +129,6 @@ function purchaseTicket() {
 </template>
 
 <style lang="scss" scoped>
-.slide-img {
-  max-height: 188px;
-}
-
 .card {
   .title {
     font-size: 12px;

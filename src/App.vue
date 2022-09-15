@@ -3,6 +3,7 @@ import FeaturedEvent from "./components/FeaturedEvent.vue";
 import HeaderSection from "./components/HeaderSection.vue";
 import GlobalSearch from "./components/GlobalSearch.vue";
 import SingleEvent from "./components/SingleEvent.vue";
+import NoDataFound from "./components/NoDataFound.vue";
 
 import { ref, onBeforeMount, computed } from "vue";
 import { useStore } from "vuex";
@@ -20,14 +21,23 @@ onBeforeMount(async () => {
   pageLoading = false;
 });
 
+// all events
+const events = computed(() => store.state.events);
+
 // featured events
-const featuredEvents = computed(() =>
-  store.state.events.filter((e) => e.venue.city === "London")
+const featuredEvents = computed(
+  () =>
+    (events.value.length &&
+      events.value.filter((e) => e.venue.city === "London")) ||
+    []
 );
 
 // other events
-const otherEvents = computed(() =>
-  store.state.events.filter((e) => e.venue.city !== "London")
+const otherEvents = computed(
+  () =>
+    (events.value.length &&
+      events.value.filter((e) => e.venue.city !== "London")) ||
+    []
 );
 </script>
 
@@ -43,7 +53,10 @@ const otherEvents = computed(() =>
     <div class="mb-5">
       <h3 class="section-title mb-5">Featured Events</h3>
 
-      <div class="sm:grid sm:grid-cols-2 sm:gap-6">
+      <div
+        v-if="featuredEvents.length"
+        class="sm:grid sm:grid-cols-2 sm:gap-6"
+      >
         <FeaturedEvent
           v-for="(event, index) in featuredEvents"
           :key="event.id"
@@ -51,12 +64,14 @@ const otherEvents = computed(() =>
           class="mb-6 sm:mb-0"
         />
       </div>
+
+      <NoDataFound title="featured events" v-else />
     </div>
 
     <div class="mb-5">
       <h3 class="section-title mb-5">All Events</h3>
 
-      <div class="sm:grid sm:grid-cols-4 sm:gap-6">
+      <div v-if="otherEvents.length" class="sm:grid sm:grid-cols-4 sm:gap-6">
         <SingleEvent
           v-for="(event, index) in otherEvents"
           :key="event.id"
@@ -64,6 +79,8 @@ const otherEvents = computed(() =>
           class="mb-6 sm:mb-0"
         />
       </div>
+
+      <NoDataFound title="events" v-else />
     </div>
   </div>
 
