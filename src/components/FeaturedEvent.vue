@@ -68,7 +68,7 @@ function purchaseTicket() {
     </div>
     <p class="title">{{ artistName }} {{ eventTitle }}</p>
 
-    <div class="md:flex md:items-center md:justify-between">
+    <div class="lg:flex lg:items-center lg:justify-between">
       <div class="">
         <div class="flex mt-3.5">
           <div class="mr-7 details">
@@ -137,7 +137,7 @@ function purchaseTicket() {
         </div>
       </div>
 
-      <div class="mt-3 md:mt-0">
+      <div class="mt-3 lg:mt-0">
         <button
           :disabled="disablePurchaseBtn"
           @click="purchaseTicket"
