@@ -7,11 +7,12 @@ import NoDataFound from "./components/NoDataFound.vue";
 import LoadingState from "./components/LoadingState.vue";
 import NavRight from "./components/NavRight.vue";
 
-import { ref, onBeforeMount, computed } from "vue";
+import { ref, onBeforeMount, computed, watch } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 
 const pageLoading = ref(false);
+const allEvents = ref(null);
 
 onBeforeMount(async () => {
   pageLoading.value = true;
@@ -36,6 +37,16 @@ const featuredEvents = computed(
       events.value.filter((e) => e.venue.city.toLowerCase() === "london")) ||
     []
 );
+
+// watch global search and bring all events category into users view
+const globalSearch = computed(() => store.state.searchTerm);
+watch(globalSearch, (newValue) => {
+  if (Boolean(newValue)) {
+    setTimeout(() => { // 
+      allEvents.value.scrollIntoView(true); // scroll into view and keep ontop
+    }, 0);
+  }
+});
 </script>
 
 <template>
@@ -62,16 +73,19 @@ const featuredEvents = computed(
             class="mb-6 sm:mb-0 mr-6 md:mr-0 last:mr-0"
           />
         </div>
-          <NavRight class="absolute" />
+        <NavRight class="absolute" />
       </div>
 
       <NoDataFound title="featured events" v-else />
     </div>
 
-    <div class="mb-5">
+    <div ref="allEvents" class="mb-5">
       <h3 class="section-title mb-5">All Events</h3>
 
-      <div v-if="otherEvents.length" class="sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-6">
+      <div
+        v-if="otherEvents.length"
+        class="sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-6"
+      >
         <SingleEvent
           v-for="(event, index) in otherEvents"
           :key="event.id"

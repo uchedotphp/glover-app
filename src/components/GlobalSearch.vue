@@ -1,15 +1,32 @@
-<script setup>
-import { ref } from "vue";
-import { useStore } from "vuex";
+<script>
+import _ from "lodash";
+import { mapMutations } from "vuex";
 
-const store = useStore();
-const search = ref("");
+export default {
+  data() {
+    return {
+      search: "",
+    };
+  },
 
-function searchData() {
-  store.commit('setStates', {
-    searchTerm: search.value
-  })
-}
+  created() {
+    this.debounceWait = _.debounce(this.delayedSearch, 1000);
+  },
+
+  methods: {
+    ...mapMutations(['setStates']),
+
+    delayedSearch() {
+      this.setStates({
+        'searchTerm': this.search
+      })
+    },
+
+    searchData() {
+      this.debounceWait();
+    },
+  },
+};
 </script>
 
 <template>
@@ -34,7 +51,7 @@ function searchData() {
         </svg>
       </div>
       <input
-        v-model="search"
+        v-model.trim="search"
         @update:model-value="searchData"
         type="text"
         name="search"
