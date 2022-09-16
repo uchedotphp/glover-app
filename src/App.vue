@@ -43,7 +43,6 @@ const globalSearch = computed(() => store.state.searchTerm);
 watch(globalSearch, (newValue) => {
   if (Boolean(newValue)) {
     setTimeout(() => {
-      //
       allEvents.value.scrollIntoView({
         behavior: "smooth",
         block: "start",
