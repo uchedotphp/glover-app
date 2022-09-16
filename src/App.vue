@@ -42,8 +42,12 @@ const featuredEvents = computed(
 const globalSearch = computed(() => store.state.searchTerm);
 watch(globalSearch, (newValue) => {
   if (Boolean(newValue)) {
-    setTimeout(() => { // 
-      allEvents.value.scrollIntoView(true); // scroll into view and keep ontop
+    setTimeout(() => {
+      //
+      allEvents.value.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }, 0);
   }
 });

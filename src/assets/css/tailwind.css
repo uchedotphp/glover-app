@@ -51,3 +51,9 @@
     max-width: 423px;
   }
 }
+
+@layer utilities {
+  ::selection {
+    @apply bg-yellow-300;
+  }
+}
