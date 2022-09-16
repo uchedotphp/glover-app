@@ -1,11 +1,11 @@
 <script setup></script>
 
 <template>
-  <div class="min-h-screen grid place-content-center">
+  <div class="imageLoader">
     <div role="status">
       <svg
         aria-hidden="true"
-        class="w-10 h-10 animate-spin text-white fill-glover-purple"
+        class="svg"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -19,9 +19,17 @@
           fill="currentFill"
         />
       </svg>
-      <span class="sr-only">Content Loading...</span>
+      <span class="sr-only">Image Loading...</span>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.imageLoader {
+  @apply inset-0 z-20 grid place-content-center;
+
+  .svg {
+    @apply w-10 h-10 animate-spin fill-glover-purple text-white;
+  }
+}
+</style>

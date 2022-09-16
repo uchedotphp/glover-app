@@ -29,7 +29,7 @@
   }
 
   .card .slide-img {
-    @apply object-cover object-center w-full h-36;
+    @apply object-cover object-center w-full h-full;
   }
 
   .card .title {

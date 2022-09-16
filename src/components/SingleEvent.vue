@@ -1,9 +1,16 @@
 <script setup>
+import ImageLoader from "./ImageLoader.vue";
 import { computed, ref } from "vue";
 
 const props = defineProps({
   payload: Object,
 });
+
+const isImgLoaded = ref(false);
+
+function onImgLoad() {
+  isImgLoaded.value = true;
+}
 
 const eventDetails = props.payload.event;
 
@@ -45,13 +52,16 @@ function purchaseTicket() {
 <template>
   <div class="card">
     <div
-      class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100"
+      class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 h-36 relative"
     >
       <img
+        @load="onImgLoad"
         :src="`https://source.unsplash.com/random?${props.payload.index}`"
-        alt="random unsplash images"
+        alt="random unsplash image"
         class="slide-img"
+        :class="{ blur : !isImgLoaded }"
       />
+      <ImageLoader v-show="!isImgLoaded" class="absolute" />
     </div>
 
     <div class="relative">
