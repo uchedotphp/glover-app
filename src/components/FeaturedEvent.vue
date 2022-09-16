@@ -1,11 +1,18 @@
 <script setup>
-import { computed } from "vue";
+import ImageLoader from "./ImageLoader.vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
 const props = defineProps({
   payload: Object,
 });
+
+const isImgLoaded = ref(false);
+
+function onImgLoad() {
+  isImgLoaded.value = true;
+}
 
 const eventDetails = props.payload.event;
 
@@ -58,14 +65,18 @@ function purchaseTicket() {
 <template>
   <div class="card">
     <div
-      class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100"
+      class="mb-4 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 h-36 relative"
     >
       <img
+        @load="onImgLoad"
         :src="artistImg"
         :alt="artistName"
         class="slide-img"
+        :class="{ blur: !isImgLoaded }"
       />
+      <ImageLoader v-show="!isImgLoaded" class="absolute" />
     </div>
+
     <p class="title">{{ artistName }} {{ eventTitle }}</p>
 
     <div class="lg:flex lg:items-center lg:justify-between">
