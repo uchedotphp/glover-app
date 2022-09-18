@@ -1,6 +1,9 @@
 <script setup>
 import ImageLoader from "./ImageLoader.vue";
 import { computed, ref } from "vue";
+import useCurrencyFormatter from "../utils/currencyFormatter";
+
+const { formatToNaira, amount } = useCurrencyFormatter();
 
 const props = defineProps({
   payload: Object,
@@ -17,6 +20,8 @@ const eventDetails = props.payload.event;
 const eventLocation = computed(
   () => `${eventDetails.venue.country} (${eventDetails.venue.name})`
 );
+
+const eventAmount = formatToNaira(eventDetails.amount);
 
 const eventDate = computed(() => {
   const eventDate = eventDetails.starts_at;
@@ -59,13 +64,13 @@ function purchaseTicket() {
         :src="`https://source.unsplash.com/random?${props.payload.index}`"
         alt="random unsplash image"
         class="slide-img"
-        :class="{ blur : !isImgLoaded }"
+        :class="{ blur: !isImgLoaded }"
       />
       <ImageLoader v-show="!isImgLoaded" class="absolute" />
     </div>
 
     <div class="relative">
-      <p class="title">{{ eventDetails.title }}</p>
+      <p class="title capitalize">{{ eventDetails.title }}</p>
 
       <!-- date badge -->
       <span class="badge">{{ eventDate }}</span>
@@ -115,7 +120,7 @@ function purchaseTicket() {
             </svg>
 
             <p class="ml-2.5">
-              Starting from <span class="figure"> ₦15,000 </span>
+              Starting from <span class="figure"> {{ eventAmount }} </span>
             </p>
           </div>
         </div>

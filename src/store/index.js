@@ -7,6 +7,7 @@ const store = createStore({
     return {
       events: [],
       searchTerm: "",
+      searchKey: "title"
     };
   },
 
@@ -50,10 +51,16 @@ const store = createStore({
         state.events.filter((e) => e.venue.city.toLowerCase() !== "london");
       if (events.length) {
         return events.map((e, index) => {
+          let amount = Math.floor(1000000 + Math.random() * 9000000)
           if (e.title.length) {
-            return { ...e, title };
+            return { ...e, title, location: e.venue.country.toLowerCase(), amount };
           } else {
-            return { ...e, title: `Event ${index + 1}` };
+            return {
+              ...e,
+              title: `event ${index + 1}`,
+              location: e.venue.country.toLowerCase(),
+              amount,
+            };
           }
         });
       }
@@ -61,10 +68,11 @@ const store = createStore({
     },
 
     eventsBySearchTerm(state, getters) {
-      if (getters.otherEvents.length) {
-        const searchTerm =
-          state.searchTerm.charAt(0).toUpperCase() + state.searchTerm.slice(1);
-        return getters.otherEvents.filter((c) => c.title.match(searchTerm));
+      const searchTerm =
+        state.searchTerm.charAt(0).toLowerCase() + state.searchTerm.slice(1);
+        let searchCat = state.searchKey;
+      if (getters.otherEvents.length && searchTerm.length) {
+        return getters.otherEvents.filter((c) => c[searchCat].match(searchTerm));
       }
       return getters.otherEvents
     },

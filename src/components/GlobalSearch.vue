@@ -1,11 +1,12 @@
 <script>
 import _ from "lodash";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   data() {
     return {
       search: "",
+      searchKeyOptions: ["title", "location"],
     };
   },
 
@@ -13,13 +14,28 @@ export default {
     this.debounceWait = _.debounce(this.delayedSearch, 1000);
   },
 
+computed: {
+    ...mapState(["searchKey"]),
+    searchCatKey: {
+      get() {
+        return this.searchKey;
+      },
+
+      set(val) {
+        this.setStates({
+          searchKey: val,
+        });
+      },
+    },
+  },
+
   methods: {
-    ...mapMutations(['setStates']),
+    ...mapMutations(["setStates"]),
 
     delayedSearch() {
       this.setStates({
-        'searchTerm': this.search
-      })
+        searchTerm: this.search,
+      });
     },
 
     searchData() {
@@ -53,12 +69,25 @@ export default {
       <input
         v-model.trim="search"
         @update:model-value="searchData"
-        type="text"
         name="search"
         id="search"
-        class="block w-full h-full py-3 rounded-lg border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        class="block w-full h-full py-3 rounded-lg border-gray-300 pl-10 pr-44 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         placeholder="Search"
       />
+
+      <div class="absolute inset-y-2 right-0 flex items-center pr-2">
+        <label for="search" class="pr-2 text-sm">Search by: </label>
+        <select
+          id="search"
+          name="search"
+          v-model="searchCatKey"
+          class="h-full bg-green-200 rounded-md border-transparent bg-transparent py-0 text-gray-700 sm:text-sm focus:outline-none"
+        >
+          <option v-for="(n, index) in searchKeyOptions" :key="index">
+            {{ n }}
+          </option>
+        </select>
+      </div>
     </div>
   </div>
 </template>
