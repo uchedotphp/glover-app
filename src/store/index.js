@@ -70,7 +70,7 @@ const store = createStore({
     eventsBySearchTerm(state, getters) {
       const searchTerm =
         state.searchTerm.charAt(0).toLowerCase() + state.searchTerm.slice(1);
-        let searchCat = state.searchKey;
+        const searchCat = state.searchKey;
       if (getters.otherEvents.length && searchTerm.length) {
         return getters.otherEvents.filter((c) => c[searchCat].match(searchTerm));
       }

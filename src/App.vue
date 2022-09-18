@@ -97,7 +97,10 @@ watch(globalSearch, (newValue) => {
         />
       </div>
 
-      <NoDataFound title="events" v-else />
+      <NoDataFound
+        :title="globalSearch.length ? `events for ${globalSearch} search` : `events`"
+        v-else
+      />
     </div>
   </div>
 
